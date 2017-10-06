@@ -35,22 +35,22 @@ process pal2nal {
     """
 }
 
-
 process codeML {
+
+    stageInMode "copy"
 
     input:
     file(cluster) from pal2nal_outputs
     file ctl from paml_ctl_file
 
     output:
-    file("$cluster") into codeML_outputs
+    file("tmp") into codeML_outputs
 
     publishDir 'paml_results'
  
     """
-    mv $ctl $cluster/
     cd $cluster
-    echo | codeml $ctl
-    """
+    echo | codeml ../$ctl
+	"""
 }
 

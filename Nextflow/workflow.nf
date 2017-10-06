@@ -10,7 +10,7 @@ process clustalOmega {
     stageInMode "copy"
 
     input:
-    file(cluster) from Channel.fromPath('../data/cluster00*',type: "dir")
+    file(cluster) from Channel.fromPath("$baseDir/../data/cluster00*",type: "dir")
 
     output:
     file("$cluster") into clustal_outputs 
@@ -28,10 +28,9 @@ process pal2nal {
 
     output:
     file("$cluster") into pal2nal_outputs    
-
  
     """
-    /usr/local/pal2nal.v14/pal2nal.pl -output paml $cluster/aa.aln $cluster/nt.fa > $cluster/alignment.phy
+    pal2nal.pl -output paml $cluster/aa.aln $cluster/nt.fa > $cluster/alignment.phy
     """
 }
 
@@ -44,7 +43,7 @@ process codeML {
     file ctl from paml_ctl_file
 
     output:
-    file("tmp") into codeML_outputs
+    file("$cluster") into codeML_outputs
 
     publishDir 'paml_results'
  

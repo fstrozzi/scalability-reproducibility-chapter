@@ -45,7 +45,7 @@ process codeML {
     output:
     file("$cluster") into codeML_outputs
 
-    publishDir 'paml_results'
+    publishDir 'paml_results', mode: 'copy'
  
     """
     cd $cluster

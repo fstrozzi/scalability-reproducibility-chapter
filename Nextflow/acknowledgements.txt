@@ -1,0 +1,1 @@
+Paolo Di Tommaso for having reviewed the Nextflow workflow example and, more importantly, for having created Nextflow itself and for the continuous support he offers to users and developers joining the community.

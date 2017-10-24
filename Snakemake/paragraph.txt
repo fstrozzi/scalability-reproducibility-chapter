@@ -1,0 +1,58 @@
+Snakemake[1] is a workflow management system that takes inspiration
+from GNU Make[2], a tool to coordinate the compilation of large
+programs consisting of interdependent source files.
+
+Snakemake provides a DSL that allows the user to specify generator
+rules.  A rule describes the steps that need to be performed to
+produce one or more output files, such as running a shell script.
+These output files may be used as inputs to other rules.  The workflow
+is thus described as a graph in which the nodes are files (provided
+input files, generated intermediate files, or the desired output
+files), and the edges are inferred from the input/output
+interdependencies of connected rules.
+
+When a user requests a certain file to be generated, Snakemake matches
+the file name against concrete or wildcard rules, traverses the graph
+from the target file upwards and begins processing the steps for every
+rule for which no "fresh" output file is available.  Whether or not an
+output file is considered "fresh" dependens on its timestamp relative
+to the timestamp of prerequisite input files.  In doing so, Snakemake
+only performs work that has not yet been done or for which the results
+are out of date, just like GNU Make.  Snakemake can be configured to
+distribute jobs to batch systems or to run jobs on the local system in
+parallel.  The degree of parallelization depends on the dependencies
+between rules.
+
+One key property that sets Snakemake apart from GNU Make is its
+integration with the Python programming language.  Snakemake is
+written in Python and permits users to import Python modules and use
+them in the definition of rules, for example .  It also has special
+support for executing R scripts in rules, by exposing rule parameters
+(such as inputs, outputs, concrete values for wildcards, etc) as an S4
+object that can be referenced in the R script.
+
+Snakemake also provides support for the Conda package manager.  A rule
+may specify a Conda[3] environment file describing a software
+environment that should be active when the rule is executed.
+Snakemake will then invoke Conda to download the required tools as
+specified in the environment file.  Alternatively, Snakemake can
+interface with an installation of the Singularity container system[4]
+and execute a rule within the context of a named application bundle,
+such as a Docker image.
+
+TODO: mention disadvantages:
+
+- timestamp checks for staleness are too coarse for fast cluster
+  systems (TODO: verify this by looking at the code)
+
+- directory containing R scripts must be writeable at runtime because
+  Snakemake modifies them; this makes it hard to distribute Snakemake
+  pipelines as a regular software package (e.g. through GNU Guix).
+
+- Snakemake does not permit a user to specify a custom location of R
+  to run R scripts.  It always uses whichever R is first on the PATH
+  (unless a Conda environment is specified).  This makes it harder to
+  achieve reproducibility across different systems, and requires that
+  Snakemake be run inside of a controlled environment or be used with
+  Conda, which is unable to guarantee bit-for-bit reproducibility on
+  its own.

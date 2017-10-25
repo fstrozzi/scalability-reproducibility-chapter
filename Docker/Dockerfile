@@ -10,3 +10,6 @@ RUN conda install -y -c bioconda snakemake
 # For GNU parallel
 RUN conda install -y -c bioconda parallel
 RUN apt-get update && apt-get install -y procps
+
+# For CWL 
+RUN pip install cwlref-runner

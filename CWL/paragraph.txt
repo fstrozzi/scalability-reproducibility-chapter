@@ -1,0 +1,26 @@
+Common workflow language (CWL) is a standard for describing portable
+workflows that are portable across a variety of computing platforms[1]. CWL is
+therefore a specification and not a specific piece of software. Given that CWL
+has its foundation from previously developed tools and Make in particular, the order of
+execution in a CWL workflow is based on dependencies between the required
+tasks[2].
+
+In describing a CWL standard, the inputs, the outputs and the software tools are
+explicitly described. This description makes the workflow tasks flexible and 
+scalable depending on the requirements of the implementation engine and the
+computing enviroment.
+
+CWL workflows are written in JSON or YAML ,or a combination of the two. A
+workflow comprise of 'steps'. Each step in turn is made up of 
+a task description that includes the inputs and outputs of the task.
+The order of executing the tasks is determined automatically by
+the implementation engine.
+
+Here we demostrate an example CWL workflow to easily run an analysis for a group of
+proteins whilst reducing the computing time and enabling reproducibility by
+taking advantage of docker. 
+
+TODO: describe the example line by line
+
+TODO: Discuss CWL's  disadvantages 
+

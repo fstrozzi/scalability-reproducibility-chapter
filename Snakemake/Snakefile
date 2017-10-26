@@ -1,4 +1,4 @@
-TARGETS = list(map(lambda n: "data/cluster%05d/results0-3.txt" % n, range(1, 73)))
+TARGETS = list(map(lambda n: "../data/cluster%05d/results0-3.txt" % n, range(1, 73)))
 
 rule all:
   input:

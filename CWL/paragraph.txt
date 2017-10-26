@@ -10,13 +10,14 @@ explicitly described. This description makes the workflow tasks flexible and
 scalable depending on the requirements of the implementation engine and the
 computing enviroment.
 
-CWL workflows comprise of workflow 'steps'. Each step in turn is made up of 
+CWL workflows are written in JSON or YAML ,or a combination of the two. A
+workflow comprise of 'steps'. Each step in turn is made up of 
 a task description that includes the inputs and outputs of the task.
 The order of executing the tasks is determined automatically by
 the implementation engine.
 
 Here we demostrate an example CWL workflow to easily run an analysis for a group of
 proteins whilst reducing the computing time and enabling reproducibility by
-taking advantage of docker
+taking advantage of docker. 
 
 

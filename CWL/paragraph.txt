@@ -20,4 +20,7 @@ Here we demostrate an example CWL workflow to easily run an analysis for a group
 proteins whilst reducing the computing time and enabling reproducibility by
 taking advantage of docker. 
 
+TODO: describe the example line by line
+
+TODO: Discuss CWL's  disadvantages 
 

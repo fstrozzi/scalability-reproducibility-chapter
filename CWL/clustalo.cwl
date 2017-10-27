@@ -10,7 +10,7 @@ hints:  # Three different ways to specify the runtime environment
   SoftwareRequirement:
     packages:
       - package: clustalo  # 2. By common name (useful with bioconda)
-        specs: [ https://identifiers.org/rrid/RRID:SCR_001591 ]
+        specs: [ "https://identifiers.org/rrid/RRID:SCR_001591" ]
           # 3. And by identifier
 
 inputs:

@@ -6,10 +6,10 @@ hints:  # Three different ways to specify the runtime environment
   DockerRequirement:
     dockerImageId: pal2nal
     dockerFile:
-      $import: ../Docker/Dockerfile
+      $include: ../Docker/Dockerfile
     # 1. Via DockerFile
     # Could have used DockerHub or other Docker registry, or a dockerImageId
-    # to be very specific.
+    # SHA to be very specific.
   SoftwareRequirement:
     packages:
       - package: pal2nal  # 2. By common name

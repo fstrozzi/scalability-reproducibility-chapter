@@ -4,7 +4,12 @@ class: CommandLineTool
 
 hints:
   DockerRequirement:
-    dockerImageId: pal2nal
+    dockerImageId: debian-paml
+    dockerFile: |
+      FROM debian:sid
+      RUN apt-get update && \
+        DEBIAN_FRONTEND=noninteractive apt-get install -yq \
+        --no-install-recommends paml
   InitialWorkDirRequirement:
     listing:
       - entryname: paml0-3.ctl

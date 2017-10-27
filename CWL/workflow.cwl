@@ -4,33 +4,63 @@ class: Workflow
 cwlVersion: v1.0
 
 inputs:
-    proteins_to_align: File
-    nucleotides: File
+  clusters:
+    type: Directory
+    label: A directory of directories
+    doc: |
+      Each sub-directory should contain a single protein (*.aa) and a single
+      nucleotide sequence (*.fa) file. The name of the sub-directory will be
+      preserved.
 
 outputs:
-    alignment1: { type: File, outputSource: clustal/alignment }
-    guide_tree: { type: File, outputSource: clustal/guide_tree }
-    alignment2: { type: File, outputSource: pal2nal/alignment }
-    results: { type: File, outputSource: codeml/results }
-
+    results:
+      type: File[]
+      outputSource: alignment/results
+    names:
+      type: string[]
+      outputSource: extract_clusters/names
 
 steps:
-  clustal:
-    run: clustalo.cwl
+  extract_clusters:
     in:
-        multi_sequence: proteins_to_align
-    out: [alignment, guide_tree]
+      clusters: clusters
+    out: [ proteins, nucleotides, names ]
+    run:
+      class: ExpressionTool
+      requirements: { InlineJavaScriptRequirement: {}}
+      inputs:
+        clusters: Directory
+      outputs:
+        proteins: File[]
+        nucleotides: File[]
+        names: string[]
+      expression: |
+        ${ var proteins = [];
+           var nucleotides = [];
+           var names = [];
+           inputs.clusters.listing.forEach(function (item) {
+             if (item.class == "Directory") {
+	       names.push(item.basename);
+               item.listing.forEach(function (item2) {
+                 if (item2.nameext == "fa") {
+                   nucleotides.push(item2);
+                 } else if (item2.namext == "aa") {
+                   proteins.push(item2);
+                 };
+               };
+             };
+           };
+           return { "proteins": proteins,
+                    "nucleotides": nucleotides,
+                    "names": names };
+         }
+  
+  aligment:
+    run: per_cluster_workflow.cwl
+    in:
+      proteins_to_align: extract_clusters/proteins
+      nucleotides: extract_clusters/nucleotides
+    out: [ results ]
+    scatter: [ proteins_to_align, nucleotides ]
+    scatterMethod: dotproduct
 
-  pal2nal:
-    run: pal2nal.cwl
-    in:
-      protein_alignment: clustal/alignment
-      nucleotides: nucleotides
-    out: [alignment]
-
-  codeml:
-    run: codeml.cwl
-    in:
-       seq: pal2nal/alignment
-       tree: clustal/guide_tree
-    out: [results]

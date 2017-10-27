@@ -3,7 +3,7 @@ workflows that are portable across a variety of computing platforms[1]. CWL is
 therefore a specification and not a specific piece of software. Given that CWL
 has its foundation from previously developed tools and Make in particular, the order of
 execution in a CWL workflow is based on dependencies between the required
-tasks[2].
+tasks[1].
 
 In describing a CWL standard, the inputs, the outputs and the software tools are
 explicitly described. This description makes the workflow tasks flexible and 

@@ -2,14 +2,9 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-hints:  # Three different ways to specify the runtime environment
+hints: 
   DockerRequirement:
     dockerImageId: pal2nal
-    dockerFile:
-      $include: ../Docker/Dockerfile
-    # 1. Via DockerFile
-    # Could have used DockerHub or other Docker registry, or a dockerImageId
-    # SHA to be very specific.
   SoftwareRequirement:
     packages:
       - package: pal2nal  # 2. By common name

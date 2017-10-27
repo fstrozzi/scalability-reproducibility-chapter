@@ -2,14 +2,17 @@
 class: Workflow
 
 cwlVersion: v1.0
+requirements:
+  SubworkflowFeatureRequirement: {}
+  ScatterFeatureRequirement: {}
 
 inputs:
   clusters:
     type: Directory
     label: A directory of directories
     doc: |
-      Each sub-directory should contain a single protein (*.aa) and a single
-      nucleotide sequence (*.fa) file. The name of the sub-directory will be
+      Each sub-directory should contain a single protein (aa.fa) and a single
+      nucleotide sequence (nt.fa) file. The name of the sub-directory will be
       preserved.
 
 outputs:
@@ -27,7 +30,7 @@ steps:
     out: [ proteins, nucleotides, names ]
     run:
       class: ExpressionTool
-      requirements: { InlineJavaScriptRequirement: {}}
+      requirements: { InlineJavascriptRequirement: {}}
       inputs:
         clusters: Directory
       outputs:
@@ -40,22 +43,22 @@ steps:
            var names = [];
            inputs.clusters.listing.forEach(function (item) {
              if (item.class == "Directory") {
-	       names.push(item.basename);
+               names.push(item.basename);
                item.listing.forEach(function (item2) {
-                 if (item2.nameext == "fa") {
+                 if (item2.basename.startsWith("nt")) {
                    nucleotides.push(item2);
-                 } else if (item2.namext == "aa") {
+                 } else if (item2.basename.startsWith("aa")) {
                    proteins.push(item2);
                  };
-               };
+               });
              };
-           };
+           });
            return { "proteins": proteins,
                     "nucleotides": nucleotides,
                     "names": names };
          }
   
-  aligment:
+  alignment:
     run: per_cluster_workflow.cwl
     in:
       proteins_to_align: extract_clusters/proteins

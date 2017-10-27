@@ -2,13 +2,14 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-hints: 
+hints:  # Three different ways to specify the runtime environment
   DockerRequirement:
     dockerImageId: pal2nal
+    # 1. Via docker container
   SoftwareRequirement:
     packages:
       - package: pal2nal  # 2. By common name
-        specs: [ https://doi.org/10.1093/nar/gkl315 ]
+        specs: [ "https://doi.org/10.1093/nar/gkl315" ]
           # 3. And by identifier
 
 inputs:

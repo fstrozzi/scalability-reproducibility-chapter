@@ -20,7 +20,7 @@ steps:
         in:
             proteinfile:
                 source: infile
-    out: [alignment,guidetreefile]
+    out: [alignment]
 
 doc: |
    An example CWL workflow 

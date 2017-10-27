@@ -4,6 +4,7 @@ class: Workflow
 cwlVersion: v1.0
 requirements:
   ScatterFeatureRequirement: {}
+  SubworkflowFeatureRequirement: {}
 
 inputs:
   proteins:
